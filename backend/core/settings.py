@@ -140,7 +140,7 @@ MEDIA_ROOT = BASE_DIR / "media/"
 
 
 GRAPHENE = {
-    "SCHEMA": "blog.schema.schema",
+    "SCHEMA": "core.schema.schema",
     "MIDDLEWARE": ["graphql_jwt.middleware.JSONWebTokenMiddleware"],
 }
 
