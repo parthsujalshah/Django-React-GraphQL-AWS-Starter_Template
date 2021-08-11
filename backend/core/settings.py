@@ -39,12 +39,20 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'users', # for auth purpose
-    'sample_list' # a sample application for displaying various graphql functionalities
+    'sample_list', # a sample application for displaying various graphql functionalities
+
+    'graphene_django',
+    'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
+    'graphql_auth',
+    'django_filters',
+    'django_extensions',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -126,3 +134,34 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = "media/"
+MEDIA_ROOT = BASE_DIR / "media/"
+
+
+GRAPHENE = {
+    "SCHEMA": "blog.schema.schema",
+    "MIDDLEWARE": ["graphql_jwt.middleware.JSONWebTokenMiddleware"],
+}
+
+AUTHENTICATION_BACKENDS = [
+    'graphql_auth.backends.GraphQLAuthBackend',
+    # "graphql_jwt.backends.JSONWebTokenBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
+
+GRAPHQL_JWT = {
+    'JWT_ALLOW_ANY_CLASSES': [
+        'graphql_auth.mutations.Register',
+        # 'graphql_auth.mutations.VerifyAccount',
+        'graphql_auth.mutations.ObtainJSONWebToken',
+    ],
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_LONG_RUNNING_REFRESH_TOKEN': True
+}
+
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
+
+CORS_ALLOW_CREDENTIALS = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
