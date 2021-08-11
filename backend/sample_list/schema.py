@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from graphene_django import DjangoObjectType
 from .models import ListItem
 from graphql_jwt.decorators import login_required
+from graphene_file_upload.scalars import Upload
 
 
 class ListItemType(DjangoObjectType):
@@ -75,7 +76,25 @@ class DeleteListItemMutation(graphene.Mutation):
         return
 
 
+class PictureUploadMutation(graphene.Mutation):
+    class Arguments:
+        id = graphene.Int(required=True)
+        image = Upload(required=True)
+
+    list_item = graphene.Field(ListItemType)
+
+    @classmethod
+    @login_required
+    def mutate(cls, info, id, image):
+        user_list_items = ListItem.objects.filter(author=info.context.user)
+        list_item = user_list_items.get(id=id)
+        list_item.image = image
+        list_item.save()
+        return PictureUploadMutation(list_item=list_item)
+
+
 class Mutation(graphene.ObjectType):
     create_item = CreateListItemMutation.Field()
     update_item = UpdateListItemMutation.Field()
     delete_item = DeleteListItemMutation.Field()
+    picture_upload = PictureUploadMutation.Field()
