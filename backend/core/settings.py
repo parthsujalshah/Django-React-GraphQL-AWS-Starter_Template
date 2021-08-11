@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'users', # for auth purpose
+    'sample_list' # a sample application for displaying various graphql functionalities
 ]
 
 MIDDLEWARE = [
