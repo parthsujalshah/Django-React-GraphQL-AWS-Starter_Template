@@ -18,7 +18,7 @@ class Query(graphene.ObjectType):
 class AuthMutation(graphene.ObjectType):
     register = mutations.Register.Field()
     token_auth = mutations.ObtainJSONWebToken.Field()
-    # send_password_reset_email = mutations.SendPasswordResetEmail.Field()
+    send_password_reset_email = mutations.SendPasswordResetEmail.Field()
 
 class Mutation(AuthMutation, graphene.ObjectType):
     pass
