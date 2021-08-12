@@ -1,12 +1,17 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 
 const Register = props => {
+
+    const history = useHistory();
+
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [confirmPassword, setConfirmPassword] = React.useState("");
     return (
         <div>
+            <button onClick={() => history.push('/sample/login')}>Login</button>
             <form onSubmit={event => {
                 event.preventDefault();
                 console.log(username, password, confirmPassword);
@@ -15,19 +20,19 @@ const Register = props => {
                     Username:
                     <input type="text" value={username} onChange={event => {
                         setUsername(event.target.value);
-                    }}/>
+                    }} />
                 </label>
                 <label>
                     Password:
                     <input type="password" value={password} onChange={event => {
                         setPassword(event.target.value);
-                    }}/>
+                    }} />
                 </label>
                 <label>
                     Confirm Password:
                     <input type="password" value={confirmPassword} onChange={event => {
                         setConfirmPassword(event.target.value);
-                    }}/>
+                    }} />
                 </label>
                 <input type="submit" value="Submit" />
             </form>

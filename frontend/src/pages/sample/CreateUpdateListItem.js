@@ -1,13 +1,19 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 
 const CreateUpdateListItem = props => {
+
+    const history = useHistory();
+
     const [title, setTitle] = React.useState("");
     const [description, setDescription] = React.useState("");
     const [image, setImage] = React.useState("");
 
     React.useEffect(() => {
         if (props.match.params.listItemId) {
+            console.log('props')
+            console.log(props.match.params.listItemId)
             const itemDetails = {
                 title: "t",
                 description: "d",
@@ -21,6 +27,7 @@ const CreateUpdateListItem = props => {
 
     return (
         <div>
+            <button onClick={() => { history.push('/sample/') }}>Home</button>
             <form onSubmit={event => {
                 event.preventDefault();
                 console.log(title, description, image);
