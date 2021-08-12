@@ -17,14 +17,22 @@ class Query(graphene.ObjectType):
     all_items_by_user = graphene.List(ListItemType)
     item_details = graphene.Field(ListItemType, id=graphene.Int(required=True))
 
+    list_all = graphene.List(ListItemType)
+
     @login_required
     def resolve_all_items_by_user(root, info):
         return ListItem.objects.filter(author=info.context.user)
 
     @login_required
     def resolve_item_details(root, info, id):
+        print(info.context.user)
         user_list_items = ListItem.objects.filter(author=info.context.user)
+        print(user_list_items, ListItem.objects.filter(author=User.objects.get(username="u1")))
+        print(id, type(id))
         return user_list_items.get(id=id)
+
+    def resolve_list_all(root, info):
+        return ListItem.objects.all()
 
 
 class CreateListItemMutation(graphene.Mutation):
@@ -85,7 +93,7 @@ class PictureUploadMutation(graphene.Mutation):
 
     @classmethod
     @login_required
-    def mutate(cls, info, id, image):
+    def mutate(cls, root, info, id, image):
         user_list_items = ListItem.objects.filter(author=info.context.user)
         list_item = user_list_items.get(id=id)
         list_item.image = image
