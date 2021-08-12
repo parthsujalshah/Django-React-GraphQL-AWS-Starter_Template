@@ -36,7 +36,7 @@ query{
 
 export const itemDetails = gql`
 query($id: Int!){
-    authorPosts(id: $id){
+    itemDetails(id: $id){
         id
         title
         description
@@ -58,8 +58,8 @@ mutation($title: String! $description: String!){
 `;
 
 export const updateItem = gql`
-mutation($title: String! $description: String!){
-    updateItem(title: $title description: $description){
+mutation($id: Int! $title: String! $description: String!){
+    updateItem(id: $id title: $title description: $description){
         listItem{
             id
             title
@@ -70,7 +70,7 @@ mutation($title: String! $description: String!){
 `;
 
 export const deleteItem = gql`
-mutation($id: Int1){
+mutation($id: Int!){
     deleteItem(id: $id){
         listItem{
             id
@@ -81,7 +81,7 @@ mutation($id: Int1){
 
 export const pictureUpload = gql`
 mutation($id: Int! $image: Upload!){
-    pictureUpload(id: $Int image: $image){
+    pictureUpload(id: $id image: $image){
         listItem{
             image
         }

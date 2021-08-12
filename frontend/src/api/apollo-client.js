@@ -11,16 +11,18 @@ export function newApolloClient() {
     const authLink = setContext((_, { headers }) => {
         const token = localStorage.getItem('token');
         const authorizationDirty = token ? `JWT ${token}` : "";
-        var authorizationClean = "";
-        for (var i in authorizationDirty) {
-            if (i !== `${4}` && i !== `${authorizationDirty.length - 1}`) {
-                authorizationClean += authorizationDirty[i];
-            }
-        }
+        console.log('authorizationDirty', authorizationDirty)
+        // var authorizationClean = "";
+        // for (var i in authorizationDirty) {
+        //     if (i !== `${4}` && i !== `${authorizationDirty.length - 1}`) {
+        //         authorizationClean += authorizationDirty[i];
+        //     }
+        // }
+        // console.log('authorizationClean', authorizationClean)
         return {
             headers: {
                 ...headers,
-                authorization: authorizationClean
+                authorization: authorizationDirty
             }
         }
     });
@@ -40,16 +42,16 @@ export function newApolloImageClient() {
     const authLink = setContext((_, { headers }) => {
         const token = localStorage.getItem('token');
         const authorizationDirty = token ? `JWT ${token}` : "";
-        var authorizationClean = "";
-        for (var i in authorizationDirty) {
-            if (i !== `${4}` && i !== `${authorizationDirty.length - 1}`) {
-                authorizationClean += authorizationDirty[i];
-            }
-        }
+        // var authorizationClean = "";
+        // for (var i in authorizationDirty) {
+        //     if (i !== `${4}` && i !== `${authorizationDirty.length - 1}`) {
+        //         authorizationClean += authorizationDirty[i];
+        //     }
+        // }
         return {
             headers: {
                 ...headers,
-                authorization: authorizationClean
+                authorization: authorizationDirty
             }
         }
     });

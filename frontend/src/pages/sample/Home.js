@@ -1,20 +1,40 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { isLoggedIn } from "../../api/auth";
+import { allItemsByUser } from "../../api/queries";
+import { newApolloClient } from "../../api/apollo-client";
 
 
 const Home = props => {
-    const [list, setList] = React.useState([{ id: 1, title: "", description: "", image: "" }]);
-
-    React.useEffect(() => {
-        const _list = [{ id: 1, title: "t", description: "d", image: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" }, { title: "t", description: "d", image: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" }]
-        setList(_list);
-    }, []);
 
     const history = useHistory();
 
+    if (!isLoggedIn()) {
+        history.push('/sample/login');
+    }
+
+    const [list, setList] = React.useState([{ id: 1, title: "", description: "", image: "" }]);
+
+    React.useEffect(async () => {
+        const client = newApolloClient();
+        try {
+            const allItemsByUserResponse = await client.query({
+                query: allItemsByUser,
+            });
+            setList(allItemsByUserResponse.data.allItemsByUser);
+        } catch {
+            localStorage.removeItem('token');
+            history.push('/sample/login');
+        }
+    }, []);
+
     return (
         <div>
-            <button onClick={() => {history.push('/sample/create/new')}}>Create New Post</button>
+            <button onClick={() => {
+                localStorage.removeItem('token');
+                history.push('/sample/login');
+            }}>Logout</button>
+            <button onClick={() => { history.push('/sample/create/new') }}>Create New Post</button>
             {list.map((listItem, index) => (
                 <div style={{ backgroundColor: "c9c9c9", marginBottom: 20 }}>
                     <p>Title: {listItem.title}</p>
