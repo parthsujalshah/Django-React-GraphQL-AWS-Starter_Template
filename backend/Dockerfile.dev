@@ -1,0 +1,16 @@
+FROM python:3.8.5-slim-buster
+
+WORKDIR /app
+
+# install psycopg2 dependencies
+RUN apt-get update \
+    && apt-get -y install gcc postgresql libpq-dev \
+    && apt-get clean
+
+# install dependencies
+RUN pip install --upgrade pip
+COPY ./requirements.txt ./
+RUN pip install -r requirements.txt
+
+COPY ./ ./
+CMD ["python", "manage.py", "runserver"]
