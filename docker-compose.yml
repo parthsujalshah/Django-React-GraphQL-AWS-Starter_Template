@@ -2,3 +2,9 @@ version: '3'
 services:
   postgres:
     image: 'postgres:latest'
+  server:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./backend
+    environment:
+      - SECRET_KEY=django-insecure-yyge^oih6qp-74t(tdgfermyxtakvw6vz-xco5*qakxme@ds@f
