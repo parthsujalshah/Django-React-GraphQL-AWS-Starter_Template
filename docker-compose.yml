@@ -2,7 +2,14 @@ version: '3'
 services:
   postgres:
     image: 'postgres:latest'
-  server:
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '3050:80'
+  backend:
     build:
       dockerfile: Dockerfile.dev
       context: ./backend
