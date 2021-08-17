@@ -43,6 +43,7 @@ const Home = props => {
                     <br />
                     <button onClick={() => { history.push(`/sample/update/${listItem.id}`) }}>Edit</button>
                     <button onClick={() => {
+                        
                         console.log('deleted');
                     }}>Delete</button>
                     <br />
