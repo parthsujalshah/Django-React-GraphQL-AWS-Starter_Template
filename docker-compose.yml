@@ -1,17 +1,40 @@
-version: '3'
+version: '3.3'
 services:
-  postgres:
+  db:
     image: 'postgres:latest'
-  nginx:
-    restart: always
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./nginx
-    ports:
-      - '3050:80'
+    environment:
+      - POSTGRES_USER=startertemplate
+      - POSTGRES_PASSWORD=startertemplate
+      - POSTGRES_DB=startertemplate
+  # nginx:
+  #   restart: always
+  #   build:
+  #     dockerfile: Dockerfile.dev
+  #     context: ./nginx
+  #   ports:
+  #     - '3050:80'
   backend:
     build:
       dockerfile: Dockerfile.dev
       context: ./backend
+    command: python manage.py runserver
+    ports:
+      - 8000:8000
     environment:
-      - SECRET_KEY=django-insecure-yyge^oih6qp-74t(tdgfermyxtakvw6vz-xco5*qakxme@ds@f
+      - IN_DOCKER=True
+      - SQL_DATABASE=startertemplate
+      - SQL_USER=startertemplate
+      - SQL_PASSWORD=startertemplate
+      - SQL_HOST=db
+      - SQL_PORT=5432
+    depends_on: 
+      - db
+  frontend:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./frontend
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+    ports:
+      - 3000:3000

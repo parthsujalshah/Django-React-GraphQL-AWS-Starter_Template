@@ -1,4 +1,6 @@
 FROM node:14.17.4-alpine
+# expose port
+EXPOSE 3000
 WORKDIR /app
 COPY ./package.json ./
 RUN npm install
