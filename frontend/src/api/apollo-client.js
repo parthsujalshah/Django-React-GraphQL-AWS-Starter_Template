@@ -6,6 +6,9 @@ import { apiUrl } from "./urls";
 export function newApolloClient() {
     const httpLink = createHttpLink({
         uri: `${apiUrl}graphql/`,
+        fetchOptions: {
+            mode: 'no-cors',
+        },
     });
 
     const authLink = setContext((_, { headers }) => {
@@ -22,7 +25,7 @@ export function newApolloClient() {
         return {
             headers: {
                 ...headers,
-                authorization: authorizationDirty
+                authorization: authorizationDirty,
             }
         }
     });
@@ -37,6 +40,9 @@ export function newApolloClient() {
 export function newApolloImageClient() {
     const httpLink = createUploadLink({
         uri: `${apiUrl}graphql/file-upload/`,
+        fetchOptions: {
+            mode: 'no-cors',
+        },
     });
 
     const authLink = setContext((_, { headers }) => {
