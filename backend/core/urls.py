@@ -7,9 +7,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True))),
-    path('graphql/file-upload/', csrf_exempt(FileUploadGraphQLView.as_view(graphiql=True)))
+    path('api/admin/', admin.site.urls),
+    path('api/graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    path('api/graphql/file-upload/', csrf_exempt(FileUploadGraphQLView.as_view(graphiql=True)))
 ]
 
 if settings.DEBUG:
