@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { isLoggedIn } from "../../api/auth";
 import { newApolloClient, newApolloImageClient } from "../../api/apollo-client";
 import { createItem, updateItem, pictureUpload, itemDetails } from "../../api/queries";
+import { apiUrl } from "../../api/urls";
 
 
 const CreateUpdateListItem = props => {
@@ -37,7 +38,6 @@ const CreateUpdateListItem = props => {
                 setTitle(itemDetailsResponse.data.itemDetails.title);
                 setDescription(itemDetailsResponse.data.itemDetails.description);
                 setImage(itemDetailsResponse.image);
-                setImageUrl(itemDetailsResponse.image);
             } catch {
                 localStorage.removeItem('token');
                 history.push('/sample/login');

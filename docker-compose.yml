@@ -9,6 +9,8 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/django
+      - static_volumes:/django/staticfiles
+      - media_volumes:/django/media
   frontend:
     build:
       context: ./frontend
@@ -21,8 +23,12 @@ services:
     volumes:
       - ./nginx/nginx-setup.conf:/etc/nginx/conf.d/default.conf:ro
       - react_build:/var/www/react
+      - static_volumes:/var/www/django/staticfiles
+      - media_volumes:/var/www/django/media
     depends_on:
       - backend
       - frontend
 volumes:
   react_build:
+  static_volumes:
+  media_volumes:

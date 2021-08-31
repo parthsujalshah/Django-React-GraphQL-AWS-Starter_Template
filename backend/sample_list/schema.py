@@ -25,10 +25,7 @@ class Query(graphene.ObjectType):
 
     @login_required
     def resolve_item_details(root, info, id):
-        print(info.context.user)
         user_list_items = ListItem.objects.filter(author=info.context.user)
-        print(user_list_items, ListItem.objects.filter(author=User.objects.get(username="u1")))
-        print(id, type(id))
         return user_list_items.get(id=id)
 
     def resolve_list_all(root, info):
