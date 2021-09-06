@@ -4,7 +4,7 @@ services:
   backend:
     build:
       context: ./backend
-    command: gunicorn core.wsgi --bind 0.0.0.0:8000
+    # command: gunicorn core.wsgi --bind 0.0.0.0:8000
     ports:
       - "8000:8000"
     volumes:
@@ -13,7 +13,7 @@ services:
       - media_volumes:/django/media
     environment:
       - IN_DOCKER=True
-    depends_on: 
+    depends_on:
       - db
   frontend:
     build:
@@ -33,7 +33,7 @@ services:
       - backend
       - frontend
   db:
-    image: postgres:12.0-alpine
+    image: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
