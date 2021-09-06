@@ -6,6 +6,7 @@ backend/**/__pycache__
 backend/*.sqlite3
 backend/media/
 backend/static/
+backend/staticfiles/
 
 # React
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.

@@ -4,13 +4,15 @@ services:
   backend:
     build:
       context: ./backend
-    command: gunicorn core.wsgi --bind 0.0.0.0:8000
+    # command: gunicorn core.wsgi --bind 0.0.0.0:8000
     ports:
       - "8000:8000"
     volumes:
       - ./backend:/django
       - static_volumes:/django/staticfiles
       - media_volumes:/django/media
+    environment:
+      - IN_DOCKER=True
   frontend:
     build:
       context: ./frontend
