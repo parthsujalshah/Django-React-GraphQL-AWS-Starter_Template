@@ -1,0 +1,120 @@
+{
+    "containerDefinitions": [
+        {
+            "environment": [
+                {
+                    "name": "IN_DOCKER",
+                    "value": "True"
+                }
+            ],
+            "essential": true,
+            "mountPoints": [
+                {
+                    "containerPath": "/django",
+                    "sourceVolume": "_Backend"
+                },
+                {
+                    "containerPath": "/django/staticfiles",
+                    "sourceVolume": "Static_Volumes"
+                },
+                {
+                    "containerPath": "/django/media",
+                    "sourceVolume": "Media_Volumes"
+                }
+            ],
+            "name": "backend"
+        },
+        {
+            "environment": [
+                {
+                    "name": "POSTGRES_USER",
+                    "value": "postgres"
+                },
+                {
+                    "name": "POSTGRES_PASSWORD",
+                    "value": "postgres"
+                },
+                {
+                    "name": "POSTGRES_DB",
+                    "value": "postgres"
+                }
+            ],
+            "essential": true,
+            "image": "postgres",
+            "mountPoints": [
+                {
+                    "containerPath": "/var/lib/postgresql/data/",
+                    "sourceVolume": "Postgres_Data"
+                }
+            ],
+            "name": "db"
+        },
+        {
+            "essential": true,
+            "mountPoints": [
+                {
+                    "containerPath": "/react/build",
+                    "sourceVolume": "React_Build"
+                }
+            ],
+            "name": "frontend"
+        },
+        {
+            "essential": true,
+            "mountPoints": [
+                {
+                    "containerPath": "/var/www/react",
+                    "sourceVolume": "React_Build"
+                },
+                {
+                    "containerPath": "/var/www/django/staticfiles",
+                    "sourceVolume": "Static_Volumes"
+                },
+                {
+                    "containerPath": "/var/www/django/media",
+                    "sourceVolume": "Media_Volumes"
+                }
+            ],
+            "name": "nginx",
+            "portMappings": [
+                {
+                    "containerPort": 8080,
+                    "hostPort": 80
+                }
+            ]
+        }
+    ],
+    "family": "",
+    "volumes": [
+        {
+            "host": {
+                "sourcePath": "./backend"
+            },
+            "name": "_Backend"
+        },
+        {
+            "host": {
+                "sourcePath": "static_volumes"
+            },
+            "name": "Static_Volumes"
+        },
+        {
+            "host": {
+                "sourcePath": "media_volumes"
+            },
+            "name": "Media_Volumes"
+        },
+        {
+            "host": {
+                "sourcePath": "react_build"
+            },
+            "name": "React_Build"
+        },
+        {
+            "host": {
+                "sourcePath": "postgres_data"
+            },
+            "name": "Postgres_Data"
+        }
+    ]
+}
