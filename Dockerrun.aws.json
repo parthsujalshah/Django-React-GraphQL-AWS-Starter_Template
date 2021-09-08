@@ -22,32 +22,8 @@
                     "sourceVolume": "Media_Volumes"
                 }
             ],
-            "name": "backend"
-        },
-        {
-            "environment": [
-                {
-                    "name": "POSTGRES_USER",
-                    "value": "postgres"
-                },
-                {
-                    "name": "POSTGRES_PASSWORD",
-                    "value": "postgres"
-                },
-                {
-                    "name": "POSTGRES_DB",
-                    "value": "postgres"
-                }
-            ],
-            "essential": true,
-            "image": "postgres",
-            "mountPoints": [
-                {
-                    "containerPath": "/var/lib/postgresql/data/",
-                    "sourceVolume": "Postgres_Data"
-                }
-            ],
-            "name": "db"
+            "name": "backend",
+            "image": "parthsujalshah/startertemplate-backend"
         },
         {
             "essential": true,
@@ -57,7 +33,8 @@
                     "sourceVolume": "React_Build"
                 }
             ],
-            "name": "frontend"
+            "name": "frontend",
+            "image": "parthsujalshah/startertemplate-frontend"
         },
         {
             "essential": true,
@@ -76,6 +53,7 @@
                 }
             ],
             "name": "nginx",
+            "image": "parthsujalshah/startertemplate-nginx",
             "portMappings": [
                 {
                     "containerPort": 8080,
@@ -109,12 +87,6 @@
                 "sourcePath": "react_build"
             },
             "name": "React_Build"
-        },
-        {
-            "host": {
-                "sourcePath": "postgres_data"
-            },
-            "name": "Postgres_Data"
         }
     ]
 }
